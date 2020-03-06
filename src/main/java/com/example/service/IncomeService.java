@@ -1,5 +1,6 @@
 package com.example.service;
 
+import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.mapper.IncomeMapper;
 import com.example.vo.IncomeVO;
@@ -12,4 +13,9 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class IncomeService extends ServiceImpl<IncomeMapper, IncomeVO> {
+
+    public void add(IncomeVO incomeVO) {
+        incomeVO.setAddTime(DateUtil.currentSeconds());
+        this.save(incomeVO);
+    }
 }
