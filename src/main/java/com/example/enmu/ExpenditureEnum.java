@@ -23,7 +23,7 @@ public enum ExpenditureEnum {
         this.code = code;
     }
 
-    public Integer getCode(String name) {
+    public static Integer getCode(String name) {
         for (ExpenditureEnum expenditureEnum : ExpenditureEnum.values()) {
             if (expenditureEnum.name.equals(name)) {
                 return expenditureEnum.code;
@@ -32,7 +32,7 @@ public enum ExpenditureEnum {
         return 0;
     }
 
-    public String getCode(Integer code) {
+    public static String getCode(Integer code) {
         for (ExpenditureEnum expenditureEnum : ExpenditureEnum.values()) {
             if (expenditureEnum.code.equals(code)) {
                 return expenditureEnum.name;

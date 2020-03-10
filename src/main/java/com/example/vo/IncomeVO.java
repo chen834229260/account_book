@@ -32,7 +32,7 @@ public class IncomeVO {
     /**
      * 收入类型
      */
-    private Integer category;
+    private String category;
     private Long addTime;
     @TableLogic
     private Integer isDelete;

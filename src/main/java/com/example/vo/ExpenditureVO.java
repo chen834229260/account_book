@@ -32,7 +32,7 @@ public class ExpenditureVO {
     /**
      * 消费类型
      */
-    private Integer category;
+    private String category;
     /**
      * 消费品名
      */

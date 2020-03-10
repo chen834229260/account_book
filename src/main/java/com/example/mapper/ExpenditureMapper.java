@@ -11,4 +11,9 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ExpenditureMapper extends BaseMapper<ExpenditureVO> {
+    /**
+     * 获取总支出
+     * @return
+     */
+    Double getTotalExpenditure();
 }

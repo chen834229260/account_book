@@ -2,9 +2,12 @@ package com.example.service;
 
 import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.enmu.ExpenditureEnum;
 import com.example.mapper.ExpenditureMapper;
 import com.example.vo.ExpenditureVO;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author: ckx
@@ -19,6 +22,16 @@ public class ExpenditureService extends ServiceImpl<ExpenditureMapper, Expenditu
      */
     public void addExpenditure(ExpenditureVO expenditureVO) {
         expenditureVO.setAddTime(DateUtil.currentSeconds());
+        expenditureVO.setCategory(ExpenditureEnum.getCode(Integer.valueOf(expenditureVO.getCategory())));
         this.save(expenditureVO);
     }
+
+    /**
+     * 获取所有
+     * @return
+     */
+    public List<ExpenditureVO> getList(){
+        return this.list();
+    }
+
 }
