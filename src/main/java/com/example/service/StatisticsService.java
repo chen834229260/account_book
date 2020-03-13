@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.mapper.ExpenditureMapper;
 import com.example.mapper.IncomeMapper;
@@ -8,9 +9,7 @@ import com.example.vo.StatisticsVO;
 import com.example.vo.output.StatisticsOutput;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author: ckx
@@ -34,9 +33,9 @@ public class StatisticsService extends ServiceImpl<StatisticsMapper, StatisticsV
      * @return
      */
     public List<StatisticsOutput> getList() {
-        List<StatisticsVO> list = this.list().stream().sorted(Comparator.comparing(StatisticsVO::getAddTime))
-                .collect(Collectors.toList());
-        return new StatisticsOutput().convert(list);
+        LambdaQueryWrapper<StatisticsVO> wrapper=new LambdaQueryWrapper<>();
+        wrapper.orderByDesc(StatisticsVO::getAddTime);
+        return new StatisticsOutput().convert(this.list(wrapper));
     }
 
     public Double getTotalIncome() {

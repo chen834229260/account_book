@@ -36,7 +36,7 @@ public class ExpenditureVO {
     /**
      * 消费品名
      */
-    private String name;
+    private String consume;
     private Long addTime;
     @TableLogic
     private Integer isDelete;

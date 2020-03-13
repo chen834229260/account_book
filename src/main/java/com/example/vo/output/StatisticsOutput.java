@@ -21,8 +21,6 @@ import java.util.List;
 @AllArgsConstructor
 public class StatisticsOutput {
 
-    private Integer userId;
-
     private Double money;
 
     private String category;
@@ -32,9 +30,9 @@ public class StatisticsOutput {
     private String addTimeStr;
 
 
-    public StatisticsOutput convert(StatisticsVO problenVO) {
+    public StatisticsOutput convert(StatisticsVO statisticsVO) {
         StatisticsOutput.InsertConvert courseInsertConvert = new StatisticsOutput.InsertConvert();
-        return courseInsertConvert.convert(problenVO);
+        return courseInsertConvert.convert(statisticsVO);
     }
 
     public List<StatisticsOutput> convert(List<StatisticsVO> list) {
