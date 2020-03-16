@@ -16,11 +16,11 @@ import java.util.List;
 @Service
 public class TagService extends ServiceImpl<TagMapper, TagVO> {
 
-    public void addTag(String tag){
+    public boolean addTag(String tag){
         TagVO tagVO=new TagVO();
         tagVO.setTag(tag);
         tagVO.setAddTime(DateUtil.currentSeconds());
-        this.save(tagVO);
+        return this.save(tagVO);
     }
 
     public List<TagVO> getList(){

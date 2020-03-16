@@ -26,8 +26,7 @@ public class TagController {
     @RequestMapping("/add")
     @ResponseBody
     public ResultDTO addTag(String tag) {
-        service.addTag(tag);
-        return new ResultDTO(CodeStatus.SUCCESS);
+        return new ResultDTO(service.addTag(tag));
     }
 
     @RequestMapping("/list")

@@ -21,10 +21,10 @@ public class NoteService extends ServiceImpl<NoteMapper, NoteVO> {
         this.mapper = mapper;
     }
 
-    public void addNote(NoteVO noteVO) {
+    public boolean addNote(NoteVO noteVO) {
         noteVO.setUserId(1);
         noteVO.setAddTime(DateUtil.currentSeconds());
-        this.save(noteVO);
+        return this.save(noteVO);
     }
 
     public NoteVO getRandNote(){

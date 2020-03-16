@@ -20,11 +20,11 @@ public class ExpenditureService extends ServiceImpl<ExpenditureMapper, Expenditu
      * 添加
      * @param expenditureVO
      */
-    public void addExpenditure(ExpenditureVO expenditureVO) {
+    public Boolean addExpenditure(ExpenditureVO expenditureVO) {
         expenditureVO.setUserId(1);
         expenditureVO.setAddTime(DateUtil.currentSeconds());
         expenditureVO.setCategory(ExpenditureEnum.getCode(Integer.valueOf(expenditureVO.getCategory())));
-        this.save(expenditureVO);
+        return this.save(expenditureVO);
     }
 
     /**

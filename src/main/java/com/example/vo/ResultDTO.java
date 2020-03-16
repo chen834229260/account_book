@@ -22,6 +22,11 @@ public class ResultDTO implements Serializable {
     private String code;
     private String message;
 
+
+    public ResultDTO(Object data) {
+        this.data = data;
+    }
+
     public ResultDTO(CodeStatus code) {
         this.code = code.getCode();
         this.message = code.getMessage();
@@ -32,4 +37,5 @@ public class ResultDTO implements Serializable {
         this.code = code.getCode();
         this.message = code.getMessage();
     }
+
 }

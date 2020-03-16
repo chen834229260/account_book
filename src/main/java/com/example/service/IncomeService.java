@@ -17,10 +17,11 @@ import java.util.List;
 @Service
 public class IncomeService extends ServiceImpl<IncomeMapper, IncomeVO> {
 
-    public void add(IncomeVO incomeVO) {
+    public boolean add(IncomeVO incomeVO) {
         incomeVO.setAddTime(DateUtil.currentSeconds());
         incomeVO.setCategory(ExpenditureEnum.getCode(Integer.valueOf(incomeVO.getCategory())));
-        this.save(incomeVO);
+        incomeVO.setUserId(1);
+        return this.save(incomeVO);
     }
 
     public List<IncomeVO> getList(){

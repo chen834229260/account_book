@@ -2,6 +2,7 @@ package com.example.controller;
 
 import com.example.service.IncomeService;
 import com.example.vo.IncomeVO;
+import com.example.vo.ResultDTO;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +24,7 @@ public class IncomeController {
 
     @RequestMapping("/add")
     @ResponseBody
-    public void add(IncomeVO incomeVO){
-        service.add(incomeVO);
+    public ResultDTO add(IncomeVO incomeVO){
+        return new ResultDTO(service.add(incomeVO));
     }
 }

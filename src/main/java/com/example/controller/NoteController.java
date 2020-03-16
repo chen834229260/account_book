@@ -26,19 +26,18 @@ public class NoteController {
     @RequestMapping("/add")
     @ResponseBody
     public ResultDTO addNote(NoteVO noteVO) {
-        service.addNote(noteVO);
-        return new ResultDTO(CodeStatus.SUCCESS);
+        return new ResultDTO(service.addNote(noteVO));
     }
 
     @RequestMapping("/rand")
     @ResponseBody
     public ResultDTO randNote() {
-        return new ResultDTO(service.getRandNote(),CodeStatus.SUCCESS);
+        return new ResultDTO(service.getRandNote(), CodeStatus.SUCCESS);
     }
 
     @RequestMapping("/list")
     @ResponseBody
     public ResultDTO list() {
-        return new ResultDTO(service.getList(),CodeStatus.SUCCESS);
+        return new ResultDTO(service.getList(), CodeStatus.SUCCESS);
     }
 }

@@ -1,6 +1,5 @@
 package com.example.controller;
 
-import com.example.enmu.CodeStatus;
 import com.example.service.ExpenditureService;
 import com.example.vo.ExpenditureVO;
 import com.example.vo.ResultDTO;
@@ -26,7 +25,6 @@ public class ExpenditureController {
     @RequestMapping("/add")
     @ResponseBody
     public ResultDTO add(ExpenditureVO expenditureVO){
-        service.addExpenditure(expenditureVO);
-        return new ResultDTO(CodeStatus.SUCCESS);
+        return new ResultDTO(service.addExpenditure(expenditureVO));
     }
 }
