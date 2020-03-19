@@ -5,11 +5,14 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.mapper.ExpenditureMapper;
 import com.example.mapper.IncomeMapper;
 import com.example.mapper.StatisticsMapper;
+import com.example.vo.IconData;
 import com.example.vo.StatisticsVO;
 import com.example.vo.output.StatisticsOutput;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author: ckx
@@ -33,21 +36,24 @@ public class StatisticsService extends ServiceImpl<StatisticsMapper, StatisticsV
      * @return
      */
     public List<StatisticsOutput> getList() {
-        LambdaQueryWrapper<StatisticsVO> wrapper=new LambdaQueryWrapper<>();
+        LambdaQueryWrapper<StatisticsVO> wrapper = new LambdaQueryWrapper<>();
         wrapper.orderByDesc(StatisticsVO::getAddTime);
         return new StatisticsOutput().convert(this.list(wrapper));
     }
 
-    public Double getTotalIncome() {
-        return incomeMapper.getTotalIncome();
-
+    public Map<String, Double> statisticalData() {
+        Map<String, Double> map = new HashMap<>(16);
+        Double totalIncome = incomeMapper.getTotalIncome();
+        Double totalExpenditure = expenditureMapper.getTotalExpenditure();
+        Double remainingBalance = totalIncome - totalExpenditure;
+        map.put("totalIncome", totalIncome);
+        map.put("totalExpenditure", totalExpenditure);
+        map.put("remainingBalance", remainingBalance);
+        return map;
     }
 
-    public Double getTotalExpenses() {
-        return expenditureMapper.getTotalExpenditure();
+    public List<IconData> iconData() {
+        return expenditureMapper.iconData();
     }
 
-    public Double remainingBalance() {
-        return incomeMapper.getTotalIncome() - expenditureMapper.getTotalExpenditure();
-    }
 }

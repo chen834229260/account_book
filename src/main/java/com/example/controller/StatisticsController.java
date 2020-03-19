@@ -30,23 +30,19 @@ public class StatisticsController {
      *
      * @return
      */
-    @RequestMapping("/getTotalExpenses")
-    public ResultDTO getTotalExpenses() {
-        return new ResultDTO(service.getTotalExpenses(), CodeStatus.SUCCESS);
+    @RequestMapping("/statisticalData")
+    public ResultDTO statisticalData() {
+        return new ResultDTO(service.statisticalData(), CodeStatus.SUCCESS);
     }
 
     /**
-     * 获取总收入
+     * 饼图数据获取
      *
      * @return
      */
-    @RequestMapping("/getTotalIncome")
-    public ResultDTO getTotalIncome() {
-        return new ResultDTO(service.getTotalIncome(), CodeStatus.SUCCESS);
+    @RequestMapping("/iconData")
+    public ResultDTO iconData() {
+        return new ResultDTO(service.iconData(),CodeStatus.SUCCESS);
     }
 
-    @RequestMapping("/remainingBalance")
-    public ResultDTO remainingBalance() {
-        return new ResultDTO(service.remainingBalance(), CodeStatus.SUCCESS);
-    }
 }

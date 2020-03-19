@@ -4,4 +4,31 @@
     <select id="getTotalExpenditure" resultType="Double">
        SELECT SUM(money) FROM a_expenditure
     </select>
+    <select id="iconData" resultType="com.example.vo.IconData">
+		 SELECT
+			category as name,
+			sum(
+				CASE category
+				WHEN "理财" THEN
+					money
+				WHEN "日常用品" THEN
+					money
+				WHEN "餐饮" THEN
+					money
+				WHEN "娱乐" THEN
+					money
+				WHEN "网上购物" THEN
+					money
+				WHEN "出行" THEN
+					money
+				WHEN "房租水电" THEN
+					money
+				END
+			) AS value
+		FROM
+			a_expenditure
+		GROUP BY
+			category
+    </select>
+
 </mapper>
