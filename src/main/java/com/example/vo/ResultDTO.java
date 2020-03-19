@@ -32,10 +32,26 @@ public class ResultDTO implements Serializable {
         this.message = code.getMessage();
     }
 
+    public ResultDTO(String message) {
+        this.message = message;
+    }
+
+    public ResultDTO(Object data, String message) {
+        this.data = data;
+        this.message = message;
+}
+
+
     public ResultDTO(Object data, CodeStatus code) {
         this.data = data;
         this.code = code.getCode();
         this.message = code.getMessage();
+    }
+    public ResultDTO(Object data, CodeStatus code,String message) {
+        this.data = data;
+        this.code = code.getCode();
+        this.message = code.getMessage();
+        this.message = message;
     }
 
 }
