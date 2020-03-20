@@ -22,25 +22,37 @@ import java.util.Map;
 public class LoginController {
     /**
      * 登录接口
+     *
      * @param userVO
      * @return
      */
     @PostMapping("login")
     @ResponseBody
-    public ResultDTO login(UserVO userVO){
+    public ResultDTO login(UserVO userVO) {
         Subject subject = SecurityUtils.getSubject();
-        Map<String,Object> info = new HashMap<>();
+        Map<String, Object> info = new HashMap<>();
         try {
-            String hashName="md5";
-            String pwd=new SimpleHash(hashName,userVO.getPassword(),null,2).toString();
+            String hashName = "md5";
+            String pwd = new SimpleHash(hashName, userVO.getPassword(), null, 2).toString();
             UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(userVO.getUsername(), pwd);
             subject.login(usernamePasswordToken);
+
             info.put("session_id", subject.getSession().getId());
-            return new ResultDTO(info,"登录成功!");
-        }catch (Exception e){
+            return new ResultDTO(info, "登录成功!");
+        } catch (Exception e) {
             e.printStackTrace();
             return new ResultDTO("登录失败");
         }
+    }
+
+    @PostMapping("isLogin")
+    @ResponseBody
+    public ResultDTO isLogin() {
+        Subject subject = SecurityUtils.getSubject();
+        UserVO user = (UserVO) SecurityUtils.getSubject().getPrincipal();
+        System.out.println(user);
+        System.out.println(subject.getSession().getId());
+        return new ResultDTO();
     }
 
 }

@@ -47,6 +47,6 @@ public class CustomRealm extends AuthorizingRealm {
         //从token获取用户信息，token代表用户输入
         String username = (String) token.getPrincipal();
         UserVO userVO = userService.getUser(username);
-        return new SimpleAuthenticationInfo(username, userVO.getPassword(), this.getClass().getName());
+        return new SimpleAuthenticationInfo(userVO, userVO.getPassword(), getName());
     }
 }
