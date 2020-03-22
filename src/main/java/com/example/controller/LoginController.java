@@ -6,9 +6,10 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.subject.Subject;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +19,7 @@ import java.util.Map;
  * @date: 2020/3/3
  * @description:
  */
-@Controller
+@RestController
 public class LoginController {
     /**
      * 登录接口
@@ -29,6 +30,7 @@ public class LoginController {
     @ResponseBody
     public ResultDTO login(UserVO userVO){
         Subject subject = SecurityUtils.getSubject();
+
         Map<String,Object> info = new HashMap<>();
         try {
             String hashName="md5";
@@ -41,6 +43,12 @@ public class LoginController {
             e.printStackTrace();
             return new ResultDTO("登录失败");
         }
+    }
+
+    @RequestMapping("/isLogin")
+    public ResultDTO getIsLogin(){
+        Subject subject= SecurityUtils.getSubject();
+        return new ResultDTO(subject.isAuthenticated());
     }
 
 }

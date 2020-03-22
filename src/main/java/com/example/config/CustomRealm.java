@@ -2,10 +2,7 @@ package com.example.config;
 
 import com.example.service.UserService;
 import com.example.vo.UserVO;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
@@ -44,9 +41,17 @@ public class CustomRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         System.out.println("认证 doGetAuthenticationInfo");
-        //从token获取用户信息，token代表用户输入
-        String username = (String) token.getPrincipal();
-        UserVO userVO = userService.getUser(username);
-        return new SimpleAuthenticationInfo(username, userVO.getPassword(), this.getClass().getName());
+        String userName = (String) token.getPrincipal();
+        String password = new String((char[]) token.getCredentials());
+
+
+        // 通过同hum到数据库查询用户信息
+        UserVO userVO = userService.getUser(userName);
+        // 虽然我们可以准确的获取异常信息，并根据这些信息给用户提示具体错误
+        // 但最安全的做法是在登录失败时仅向用户显示通用错误提示信息，例如“用户名或密码错误”。这样可以防止数据库被恶意扫描。
+        if (userVO == null) {
+            throw new UnknownAccountException("用户名或密码错误！");
+        }
+        return new SimpleAuthenticationInfo(userVO, password, getName());
     }
 }

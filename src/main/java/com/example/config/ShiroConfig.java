@@ -26,7 +26,6 @@ public class ShiroConfig {
         return shiroFilterFactoryBean;
     }
 
-
     @Bean
     public SecurityManager securityManager(){
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
@@ -40,7 +39,6 @@ public class ShiroConfig {
         return securityManager;
     }
 
-
     /**
      * 自定义realm
      * @return
@@ -52,7 +50,6 @@ public class ShiroConfig {
         //customRealm.setCredentialsMatcher(hashedCredentialsMatcher());
         return customRealm;
     }
-
 
     /**
      * 密码加解密规则
@@ -71,8 +68,6 @@ public class ShiroConfig {
         return credentialsMatcher;
     }
 
-
-
     //自定义sessionManager
     @Bean
     public SessionManager sessionManager(){
@@ -84,7 +79,4 @@ public class ShiroConfig {
 
         return customSessionManager;
     }
-
-
-
 }
