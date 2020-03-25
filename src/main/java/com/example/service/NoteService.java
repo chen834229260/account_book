@@ -3,6 +3,7 @@ package com.example.service;
 import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.mapper.NoteMapper;
+import com.example.util.UserUtils;
 import com.example.vo.NoteVO;
 import org.springframework.stereotype.Service;
 
@@ -22,13 +23,13 @@ public class NoteService extends ServiceImpl<NoteMapper, NoteVO> {
     }
 
     public boolean addNote(NoteVO noteVO) {
-        noteVO.setUserId(1);
+        noteVO.setUserId(UserUtils.getCurrentUser().getId());
         noteVO.setAddTime(DateUtil.currentSeconds());
         return this.save(noteVO);
     }
 
     public NoteVO getRandNote(){
-        return mapper.getRandNote();
+        return mapper.getRandNote(UserUtils.getCurrentUser().getId());
     }
 
     public List<NoteVO> getList(){

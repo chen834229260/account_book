@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.mapper.ExpenditureMapper;
 import com.example.mapper.IncomeMapper;
 import com.example.mapper.StatisticsMapper;
+import com.example.util.UserUtils;
 import com.example.vo.IconData;
 import com.example.vo.StatisticsVO;
 import com.example.vo.output.StatisticsOutput;
@@ -43,8 +44,8 @@ public class StatisticsService extends ServiceImpl<StatisticsMapper, StatisticsV
 
     public Map<String, Double> statisticalData() {
         Map<String, Double> map = new HashMap<>(16);
-        Double totalIncome = incomeMapper.getTotalIncome();
-        Double totalExpenditure = expenditureMapper.getTotalExpenditure();
+        Double totalIncome = incomeMapper.getTotalIncome(UserUtils.getCurrentUser().getId());
+        Double totalExpenditure = expenditureMapper.getTotalExpenditure(UserUtils.getCurrentUser().getId());
         Double remainingBalance = totalIncome - totalExpenditure;
         map.put("totalIncome", totalIncome);
         map.put("totalExpenditure", totalExpenditure);
@@ -53,7 +54,7 @@ public class StatisticsService extends ServiceImpl<StatisticsMapper, StatisticsV
     }
 
     public List<IconData> iconData() {
-        return expenditureMapper.iconData();
+        return expenditureMapper.iconData(UserUtils.getCurrentUser().getId());
     }
 
 }

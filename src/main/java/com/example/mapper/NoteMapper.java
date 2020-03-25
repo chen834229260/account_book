@@ -12,5 +12,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface NoteMapper extends BaseMapper<NoteVO> {
 
-    NoteVO getRandNote();
+    /**
+     * 随机当前登录用户的一条随手记
+     * @param id
+     * @return
+     */
+    NoteVO getRandNote(Integer id);
 }

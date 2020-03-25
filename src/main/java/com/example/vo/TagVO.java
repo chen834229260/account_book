@@ -20,6 +20,8 @@ public class TagVO {
 
   private Integer id;
 
+  private Integer userId;
+
   private String tag;
 
   private Long addTime;

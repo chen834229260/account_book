@@ -16,15 +16,15 @@ import java.util.List;
 public interface ExpenditureMapper extends BaseMapper<ExpenditureVO> {
     /**
      * 获取总支出
-     *
+     * @param id 登录用户ID
      * @return
      */
-    Double getTotalExpenditure();
+    Double getTotalExpenditure(Integer id);
 
     /**
      * 饼图统计数据获取
-     *
+     * @param id 登录用户ID
      * @return
      */
-    List<IconData> iconData();
+    List<IconData> iconData(Integer id);
 }

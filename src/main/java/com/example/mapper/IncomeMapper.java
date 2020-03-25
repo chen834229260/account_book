@@ -13,7 +13,8 @@ import org.springframework.stereotype.Repository;
 public interface IncomeMapper extends BaseMapper<IncomeVO> {
     /**
      * 获取总收入
+     * @param id
      * @return
      */
-    Double getTotalIncome();
+    Double getTotalIncome(Integer id);
 }

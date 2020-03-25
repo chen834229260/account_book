@@ -4,10 +4,9 @@ import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.enmu.ExpenditureEnum;
 import com.example.mapper.IncomeMapper;
+import com.example.util.UserUtils;
 import com.example.vo.IncomeVO;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @author: ckx
@@ -20,11 +19,7 @@ public class IncomeService extends ServiceImpl<IncomeMapper, IncomeVO> {
     public boolean add(IncomeVO incomeVO) {
         incomeVO.setAddTime(DateUtil.currentSeconds());
         incomeVO.setCategory(ExpenditureEnum.getCode(Integer.valueOf(incomeVO.getCategory())));
-        incomeVO.setUserId(1);
+        incomeVO.setUserId(UserUtils.getCurrentUser().getId());
         return this.save(incomeVO);
-    }
-
-    public List<IncomeVO> getList(){
-        return this.list();
     }
 }
