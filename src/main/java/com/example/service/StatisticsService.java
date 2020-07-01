@@ -1,6 +1,8 @@
 package com.example.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.mapper.ExpenditureMapper;
 import com.example.mapper.IncomeMapper;
@@ -8,7 +10,9 @@ import com.example.mapper.StatisticsMapper;
 import com.example.util.UserUtils;
 import com.example.vo.IconData;
 import com.example.vo.StatisticsVO;
+import com.example.vo.output.BeanOuput;
 import com.example.vo.output.StatisticsOutput;
+import com.example.vo.query.QueryStatisticsVO;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -36,10 +40,16 @@ public class StatisticsService extends ServiceImpl<StatisticsMapper, StatisticsV
      *
      * @return
      */
-    public List<StatisticsOutput> getList() {
+    public BeanOuput<StatisticsOutput> getList(QueryStatisticsVO input) {
         LambdaQueryWrapper<StatisticsVO> wrapper = new LambdaQueryWrapper<>();
-        wrapper.orderByDesc(StatisticsVO::getAddTime);
-        return new StatisticsOutput().convert(this.list(wrapper));
+        wrapper.eq(StatisticsVO::getUserId,UserUtils.getCurrentUser().getId())
+                .orderByDesc(StatisticsVO::getAddTime);
+        IPage<StatisticsVO> page=new Page<>(input.getPage(),input.getLimit());
+        IPage<StatisticsVO> listPage=this.page(page,wrapper);
+        BeanOuput<StatisticsOutput> bean=new BeanOuput<>();
+        bean.setRecords(new StatisticsOutput().convert(listPage.getRecords()));
+        bean.setTotal(listPage.getTotal());
+        return bean;
     }
 
     public Map<String, Double> statisticalData() {

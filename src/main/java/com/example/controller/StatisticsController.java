@@ -3,7 +3,9 @@ package com.example.controller;
 import com.example.enmu.CodeStatus;
 import com.example.service.StatisticsService;
 import com.example.vo.ResultDTO;
+import com.example.vo.query.QueryStatisticsVO;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -21,8 +23,9 @@ public class StatisticsController {
     }
 
     @RequestMapping("/getList")
-    public ResultDTO getList() {
-        return new ResultDTO(service.getList(), CodeStatus.SUCCESS);
+    @ResponseBody
+    public ResultDTO getList(QueryStatisticsVO input) {
+        return new ResultDTO(service.getList(input), CodeStatus.SUCCESS);
     }
 
     /**
