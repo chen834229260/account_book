@@ -27,4 +27,5 @@ public class ExpenditureController {
     public ResultDTO add(ExpenditureVO expenditureVO){
         return new ResultDTO(service.addExpenditure(expenditureVO));
     }
+
 }

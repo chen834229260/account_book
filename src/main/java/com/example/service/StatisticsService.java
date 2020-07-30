@@ -8,13 +8,14 @@ import com.example.mapper.ExpenditureMapper;
 import com.example.mapper.IncomeMapper;
 import com.example.mapper.StatisticsMapper;
 import com.example.util.UserUtils;
-import com.example.vo.IconData;
 import com.example.vo.StatisticsVO;
 import com.example.vo.output.BeanOuput;
 import com.example.vo.output.StatisticsOutput;
 import com.example.vo.query.QueryStatisticsVO;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,10 +30,15 @@ public class StatisticsService extends ServiceImpl<StatisticsMapper, StatisticsV
 
     private final ExpenditureMapper expenditureMapper;
     private final IncomeMapper incomeMapper;
+    private final ExpenditureService expenditureService;
+    private final IncomeService incomeService;
 
-    public StatisticsService(ExpenditureMapper expenditureMapper, IncomeMapper incomeMapper) {
+    public StatisticsService(ExpenditureMapper expenditureMapper, IncomeMapper incomeMapper,
+                             IncomeService incomeService, ExpenditureService expenditureService) {
         this.expenditureMapper = expenditureMapper;
         this.incomeMapper = incomeMapper;
+        this.expenditureService = expenditureService;
+        this.incomeService = incomeService;
     }
 
     /**
@@ -42,11 +48,11 @@ public class StatisticsService extends ServiceImpl<StatisticsMapper, StatisticsV
      */
     public BeanOuput<StatisticsOutput> getList(QueryStatisticsVO input) {
         LambdaQueryWrapper<StatisticsVO> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(StatisticsVO::getUserId,UserUtils.getCurrentUser().getId())
+        wrapper.eq(StatisticsVO::getUserId, UserUtils.getCurrentUser().getId())
                 .orderByDesc(StatisticsVO::getAddTime);
-        IPage<StatisticsVO> page=new Page<>(input.getPage(),input.getLimit());
-        IPage<StatisticsVO> listPage=this.page(page,wrapper);
-        BeanOuput<StatisticsOutput> bean=new BeanOuput<>();
+        IPage<StatisticsVO> page = new Page<>(input.getPage(), input.getLimit());
+        IPage<StatisticsVO> listPage = this.page(page, wrapper);
+        BeanOuput<StatisticsOutput> bean = new BeanOuput<>();
         bean.setRecords(new StatisticsOutput().convert(listPage.getRecords()));
         bean.setTotal(listPage.getTotal());
         return bean;
@@ -63,8 +69,12 @@ public class StatisticsService extends ServiceImpl<StatisticsMapper, StatisticsV
         return map;
     }
 
-    public List<IconData> iconData() {
-        return expenditureMapper.iconData(UserUtils.getCurrentUser().getId());
+    public List<List<Double>> iconData() throws ParseException {
+        List<List<Double>> result = new ArrayList<>();
+        List<Double> incomeTotal = incomeService.monthlyIncomeStatistics();
+        result.add(incomeTotal);
+        List<Double> expenditureTotal = expenditureService.monthlyExpenditureStatistics();
+        result.add(expenditureTotal);
+        return result;
     }
-
 }

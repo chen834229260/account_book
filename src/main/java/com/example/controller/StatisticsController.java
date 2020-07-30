@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.ParseException;
+
 /**
  * @author: ckx
  * @date: 2020/3/9
@@ -44,7 +46,7 @@ public class StatisticsController {
      * @return
      */
     @RequestMapping("/iconData")
-    public ResultDTO iconData() {
+    public ResultDTO iconData() throws ParseException {
         return new ResultDTO(service.iconData(),CodeStatus.SUCCESS);
     }
 
