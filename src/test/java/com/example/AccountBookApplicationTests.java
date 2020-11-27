@@ -1,12 +1,13 @@
-package com.example.service;
+package com.example;
 
-import cn.hutool.core.date.DateUtil;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.example.enmu.ExpenditureEnum;
-import com.example.mapper.ExpenditureMapper;
-import com.example.util.UserUtils;
+
+import com.example.service.ExpenditureService;
 import com.example.vo.ExpenditureVO;
-import org.springframework.stereotype.Service;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,34 +18,28 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @author: ckx
- * @date: 2020/3/2
- * @description:支出
+ * @author MTR-007
  */
-@Service
-public class ExpenditureService extends ServiceImpl<ExpenditureMapper, ExpenditureVO> {
-    /**
-     * 添加
-     * @param expenditureVO
-     */
-    public Boolean addExpenditure(ExpenditureVO expenditureVO) {
-        expenditureVO.setUserId(UserUtils.getCurrentUser().getId());
-        expenditureVO.setAddTime(DateUtil.currentSeconds());
-        expenditureVO.setCategory(ExpenditureEnum.getCode(Integer.valueOf(expenditureVO.getCategory())));
-        return this.save(expenditureVO);
-    }
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class AccountBookApplicationTests {
 
-    public List<Double> monthlyExpenditureStatistics() throws ParseException {
-        List<ExpenditureVO> list = this.list();
+    @Autowired
+    ExpenditureService expenditureService;
+
+    @Test
+    public void test1() throws ParseException {
+        List<ExpenditureVO> list = expenditureService.list();
         List<Double> resultTotalList = new ArrayList<>();
         int currentMonth = LocalDate.now().getMonthValue();
         for (int i = 13; i > 1; i--) {
-            int temp = currentMonth  - i - 2;
+            int temp = currentMonth - i - 2;
             if (temp > currentMonth) {
                 temp -= temp * 2;
             }
             String monthStart = LocalDate.now().plusMonths(temp).with(TemporalAdjusters.firstDayOfMonth()) + " 00:00:00";
             String monthEnd = LocalDate.now().plusMonths(temp).with(TemporalAdjusters.lastDayOfMonth()) + " 23:59:59";
+            System.out.println(monthStart);
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Long monthStartTime = format.parse(monthStart).getTime() / 1000L;
             Long monthEndTime = format.parse(monthEnd).getTime() / 1000L;
@@ -55,6 +50,8 @@ public class ExpenditureService extends ServiceImpl<ExpenditureMapper, Expenditu
             }
             resultTotalList.add(total);
         }
-        return resultTotalList;
+        resultTotalList.stream().forEach(System.out::println);
     }
+
+
 }

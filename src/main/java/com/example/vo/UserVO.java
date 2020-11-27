@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 public class UserVO {
 
     private Integer id;
-    private String username;
+    public String username;
     private String password;
     private Integer isDelete;
 

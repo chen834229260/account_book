@@ -30,17 +30,18 @@ public class NoteService extends ServiceImpl<NoteMapper, NoteVO> {
         return this.save(noteVO);
     }
 
-    public NoteVO getRandNote(){
+    public NoteVO getRandNote() {
         return mapper.getRandNote(UserUtils.getCurrentUser().getId());
     }
 
-    public List<NoteOutput> getList(){
+    public List<NoteOutput> getList() {
         return new NoteOutput().convert(this.list());
     }
 
-    public List<NoteVO> tagByNoteSize(Integer tagId){
-        LambdaQueryWrapper<NoteVO> wrapper=new LambdaQueryWrapper<>();
-        wrapper.eq(NoteVO::getTagId,tagId);
+    public List<NoteVO> tagByNoteSize(Integer tagId) {
+        LambdaQueryWrapper<NoteVO> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(NoteVO::getTagId, tagId)
+                .orderByDesc(NoteVO::getAddTime);
         return this.list(wrapper);
     }
 

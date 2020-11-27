@@ -29,6 +29,7 @@ public class TagService extends ServiceImpl<TagMapper, TagVO> {
     public boolean addTag(String tag){
         TagVO tagVO=new TagVO();
         tagVO.setTag(tag);
+        tagVO.setUserId(UserUtils.getCurrentUser().getId());
         tagVO.setAddTime(DateUtil.currentSeconds());
         return this.save(tagVO);
     }
