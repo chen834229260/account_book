@@ -36,7 +36,7 @@ public class IncomeService extends ServiceImpl<IncomeMapper, IncomeVO> {
         List<Double> resultTotalList = new ArrayList<>();
         int currentMonth = LocalDate.now().getMonthValue();
         for (int i = 13; i > 1; i--) {
-            int temp = currentMonth  - i - 8;
+            int temp = currentMonth  - i - 10;
             if (temp > currentMonth) {
                 temp -= temp * 2;
             }

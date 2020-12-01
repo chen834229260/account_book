@@ -39,7 +39,7 @@ public class ExpenditureService extends ServiceImpl<ExpenditureMapper, Expenditu
         List<Double> resultTotalList = new ArrayList<>();
         int currentMonth = LocalDate.now().getMonthValue();
         for (int i = 13; i > 1; i--) {
-            int temp = currentMonth  - i - 2;
+            int temp = currentMonth  - i - 10;
             if (temp > currentMonth) {
                 temp -= temp * 2;
             }
